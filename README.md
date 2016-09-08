@@ -24,5 +24,13 @@ Usage:
 ber-kit undrain --host http://marathon.example.com:8080 --urls 10.30.40.50,10.30.40.51
 ```
 
+# Testing
+You can run the built-in tests by running:
+```
+nosetests /path/to/ber-kit
+```
+
+You can install this by running `pip install nose`.  
+
 # Licensing
 Licensed under the GNU GPLv3 License. See `LICENSE`
