@@ -23,7 +23,7 @@ import ber_kit.commands.utils as utils
 from marathon import MarathonClient
 from marathon.models import MarathonConstraint
 
-def unmigrate_tasks(marathon_client, apps_to_update, constraints_to_remove):
+def unmigrate_tasks(marathon_client, apps_to_update, constraints_to_remove, force=False):
   """
   Remove temporary constraints used for host migration
   """
@@ -38,7 +38,7 @@ def unmigrate_tasks(marathon_client, apps_to_update, constraints_to_remove):
             to_redeploy.constraints.remove(constraint)
 
     # Redeploy
-    marathon_client.update_app(appId, to_redeploy, force=True)
+    marathon_client.update_app(appId, to_redeploy, force=force)
   print(">>> Unmigrated all the tasks")
 
 def main(args):
@@ -63,7 +63,7 @@ def main(args):
               filtered_apps.update(to_update)
 
   # Tasks unmigration
-  unmigrate_tasks(marathon_client, filtered_apps, sentinels)
+  unmigrate_tasks(marathon_client, filtered_apps, sentinels, args.force)
 
 if __name__ == "__main__":
   sys.exit(main())

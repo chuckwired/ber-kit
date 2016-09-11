@@ -43,11 +43,13 @@ def parse_args():
   drain_parser = subparsers.add_parser('drain', help='do drain things')
   drain_parser.add_argument('--url', dest='url', type=str, help='Marathon URL (http://marathon.example.com)')
   drain_parser.add_argument('--hosts', dest='hosts', type=str, help='Hosts going to go for maintenance')
+  drain_parser.add_argument('--force', dest='force', action='store_true', help='force the deployment(s) - use with caution')
 
   # Undrain parser
-  drain_parser = subparsers.add_parser('undrain', help='do undrain things')
-  drain_parser.add_argument('--url', dest='url', type=str, help='Marathon URL (http://marathon.example.com)')
-  drain_parser.add_argument('--hosts', dest='hosts', type=str, help='Hosts that have finished maintenance')
+  undrain_parser = subparsers.add_parser('undrain', help='do undrain things')
+  undrain_parser.add_argument('--url', dest='url', type=str, help='Marathon URL (http://marathon.example.com)')
+  undrain_parser.add_argument('--hosts', dest='hosts', type=str, help='Hosts that have finished maintenance')
+  undrain_parser.add_argument('--force', dest='force', action='store_true', help='force the deployment(s) - use with caution')
 
   # Return it
   args = parser.parse_args()

@@ -23,7 +23,7 @@ import ber_kit.commands.utils as utils
 from marathon import MarathonClient
 from marathon.models import MarathonConstraint
 
-def migrate_tasks(marathon_client, tasks, hosts):
+def migrate_tasks(marathon_client, tasks, hosts, force=False):
   """
   Migrate tasks from the hosts going to go for maintenance
   """
@@ -43,7 +43,7 @@ def migrate_tasks(marathon_client, tasks, hosts):
             app_to_redeploy.constraints.append(constraint)
 
     # Redeploy
-    marathon_client.update_app(app_id, app_to_redeploy, force=False)
+    marathon_client.update_app(app_id, app_to_redeploy, force=force)
 
   print(">>> Migrated all the tasks")
 
@@ -65,7 +65,7 @@ def main(args):
   print(json.dumps(dicted_tasks.keys(), sort_keys=True, indent=4, separators=(',', ': ')))
 
   # Tasks migration
-  migrate_tasks(marathon_client, dicted_tasks, migration_hosts)
+  migrate_tasks(marathon_client, dicted_tasks, migration_hosts, args.force)
 
 if __name__ == "__main__":
   sys.exit(main())
