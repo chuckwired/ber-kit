@@ -8,6 +8,7 @@ optional arguments:
   -h, --help     show this help message and exit
   --url URL      Marathon URL (http://marathon.example.com)
   --hosts HOSTS  Hosts that have finished maintenance
+  --force        Set deployment to be 'force=true'
 
 Example Usage:
 $ ber-kit undrain --url http://marathon.example.com --hosts 172.31.37.92,172.31.35.101
