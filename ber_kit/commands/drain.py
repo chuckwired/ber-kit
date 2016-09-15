@@ -43,6 +43,11 @@ def migrate_tasks(marathon_client, tasks, hosts, force=False):
         if constraint.value == task_host:
             app_to_redeploy.constraints.append(constraint)
 
+    # Clean the app
+    app_to_redeploy.tasks = []
+    if app_to_redeploy.container:
+        app_to_redeploy.fetch = []
+
     # Redeploy
     marathon_client.update_app(app_id, app_to_redeploy, force=force)
 
