@@ -28,18 +28,23 @@ def unmigrate_tasks(marathon_client, apps_to_update, constraints_to_remove, forc
   """
   Remove temporary constraints used for host migration
   """
-  for appId in apps_to_update.iterkeys():
+  for app_id in apps_to_update.iterkeys():
     print(">>> Unmigrating the following task")
-    print(appId)
+    print(app_id)
 
     # Remove all unrequired constraints
-    to_redeploy = marathon_client.get_app(appId)
+    app_to_redeploy = marathon_client.get_app(app_id)
     for constraint in constraints_to_remove:
-        if constraint in to_redeploy.constraints:
-            to_redeploy.constraints.remove(constraint)
+        if constraint in app_to_redeploy.constraints:
+            app_to_redeploy.constraints.remove(constraint)
+
+    # Clean the app
+    app_to_redeploy.tasks = []
+    if app_to_redeploy.container:
+        app_to_redeploy.fetch = []
 
     # Redeploy
-    marathon_client.update_app(appId, to_redeploy, force=force)
+    marathon_client.update_app(app_id, app_to_redeploy, force=force)
   print(">>> Unmigrated all the tasks")
 
 def main(args):
