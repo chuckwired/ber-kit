@@ -48,7 +48,7 @@ def unmigrate_tasks(marathon_client, apps_to_update, constraints_to_remove, forc
   print(">>> Unmigrated all the tasks")
 
 def main(args):
-  migration_hosts = args.hosts.split(',')
+  migration_hosts = args.hosts.replace('"','').replace('\'','').split(',')
   marathon_client = MarathonClient(args.url)
 
   # Get the running marathon application dictionary with constraints

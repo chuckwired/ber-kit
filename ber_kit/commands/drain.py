@@ -54,7 +54,7 @@ def migrate_tasks(marathon_client, tasks, hosts, force=False):
   print(">>> Migrated all the tasks")
 
 def main(args):
-  migration_hosts = args.hosts.split(',')
+  migration_hosts = args.hosts.replace('"','').replace('\'','').split(',')
   marathon_client = MarathonClient(args.url)
 
   # Get the running marathon application dictionary
